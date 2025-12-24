@@ -1,0 +1,501 @@
+:root {
+    --primary: #FF6B6B;
+    --secondary: #4ECDC4;
+    --accent: #FFE66D;
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --text-color: #2F3E46;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --border-radius: 24px;
+    --transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.05);
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+}
+
+.hero-img {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid white;
+    box-shadow: var(--shadow);
+    animation: float 4s ease-in-out infinite;
+}
+
+.hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.glass {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow);
+}
+
+/* Setup View */
+#setup-view {
+    display: none;
+}
+
+#setup-view.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.control-group {
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+input[type="range"] {
+    flex: 1;
+    accent-color: var(--primary);
+}
+
+/* Game View */
+#game-view {
+    display: none;
+}
+
+#game-view.active {
+    display: block;
+    animation: slideUp 0.6s ease-out;
+}
+
+.card-display {
+    perspective: 1000px;
+    margin-bottom: 2rem;
+}
+
+.animal-card {
+    height: 300px;
+    border-radius: var(--border-radius);
+    position: relative;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+.animal-card.dropping {
+    animation: dropIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes dropIn {
+    0% {
+        transform: scale(1.5) translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.card-front,
+.card-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius);
+    transition: opacity 0.3s ease;
+}
+
+.card-front {
+    z-index: 10;
+    opacity: 1;
+}
+
+.card-content {
+    z-index: 5;
+    opacity: 0;
+}
+
+.showing-animal .card-front {
+    opacity: 0;
+    z-index: 5;
+}
+
+.showing-animal .card-content {
+    opacity: 1;
+    z-index: 10;
+}
+
+.card-front {
+    background: var(--primary);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-back-icon {
+    font-size: 8rem;
+    font-weight: 800;
+    opacity: 0.15;
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    z-index: 1;
+    line-height: 1;
+}
+
+.timer-display {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress-ring {
+    position: absolute;
+    transform: rotate(-90deg);
+    width: 150px;
+    height: 150px;
+}
+
+.progress-ring__circle {
+    transition: stroke-dashoffset 0.35s;
+    transform-origin: 50% 50%;
+}
+
+#countdown {
+    font-size: 5rem;
+    font-weight: 800;
+    color: white;
+    transition: all 0.2s ease;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+    background: #fff;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.02);
+    transition: background-color 0.4s ease;
+}
+
+.animal-emoji {
+    font-size: 7.5rem;
+    margin-bottom: 0px;
+    line-height: 1.1;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+#animal-name {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+/* Timer removed from here as it is now inside card-front */
+
+.paused #card-display::after {
+    content: "PAUSADO";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 1.5rem;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    pointer-events: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.paused .progress-ring__circle {
+    stroke: #ccc;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary,
+.btn-ghost {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    border: none;
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(255, 107, 107, 0.4);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: white;
+    box-shadow: 0 10px 20px rgba(78, 205, 196, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text-color);
+    opacity: 0.6;
+    margin-top: 1rem;
+}
+
+.btn-ghost:hover {
+    opacity: 1;
+}
+
+.button-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* History */
+.history-container {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px dashed rgba(0, 0, 0, 0.1);
+}
+
+.history-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+    justify-content: flex-start;
+}
+
+.history-item {
+    min-width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    padding: 5px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+footer {
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    #app {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2.2rem;
+    }
+
+    header p {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .animal-card {
+        height: 280px;
+    }
+
+    .animal-emoji {
+        font-size: 6rem;
+    }
+
+    #animal-name {
+        font-size: 2.2rem;
+    }
+
+    #countdown {
+        font-size: 4rem;
+    }
+
+    .card-back-icon {
+        font-size: 6rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .button-row {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .history-item {
+        min-width: 70px;
+        height: 70px;
+    }
+
+    .history-item span:first-child {
+        font-size: 1.4rem !important;
+    }
+
+    .history-item span:last-child {
+        font-size: 0.6rem !important;
+    }
+}
+
+@media (max-height: 700px) {
+    header {
+        margin-bottom: 1rem;
+    }
+
+    .hero-img {
+        display: none;
+    }
+
+    .history-container {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+    }
+}

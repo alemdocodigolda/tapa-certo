@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tapa Certo - Jogo Infantil</title>
+    <meta name="description" content="Um jogo dinâmico e divertido para cronometrar as jogadas do Tapa Certo.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="hero-img">
+                <img src="logo.png" alt="Tapa Certo Logo" id="main-logo">
+            </div>
+            <h1>Tapa Certo</h1>
+            <p>Prepare-se para bater!</p>
+        </header>
+
+        <main id="game-container" class="view-setup">
+            <!-- Setup View -->
+            <section id="setup-view" class="active">
+                <div class="card glass">
+                    <h2>Configurações</h2>
+                    <div class="control-group">
+                        <label for="timer-input">Tempo entre rodadas (descanso):</label>
+                        <div class="slider-container">
+                            <input type="range" id="timer-input" min="5" max="60" value="30">
+                            <span id="timer-value">30s</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="visibility-input">Tempo da carta visível (jogo):</label>
+                        <div class="slider-container">
+                            <input type="range" id="visibility-input" min="2" max="30" value="10">
+                            <span id="visibility-value">10s</span>
+                        </div>
+                    </div>
+                    <button id="start-btn" class="btn-primary">Começar Jogo</button>
+                </div>
+            </section>
+
+            <!-- Game View -->
+            <section id="game-view">
+                <div id="card-display" class="card-display">
+                    <div class="animal-card glass" id="animal-card">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <div class="timer-display">
+                                    <span id="countdown">30</span>
+                                </div>
+                                <span class="card-back-icon">?</span>
+                            </div>
+                            <div class="card-content">
+                                <div id="animal-image" class="animal-emoji">🦁</div>
+                                <h2 id="animal-name">Leão</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-controls">
+                    <div class="button-row">
+                        <button id="pause-btn" class="btn-secondary">Pausar</button>
+                        <button id="next-btn" class="btn-primary">Próxima Carta</button>
+                    </div>
+                </div>
+
+                <div class="history-container">
+                    <h3>Últimas Cartas</h3>
+                    <div id="history-list" class="history-list"></div>
+                </div>
+
+                <button id="reset-btn" class="btn-ghost">Reiniciar Baralho</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>Desenvolvido para diversão em família</p>
+        </footer>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
