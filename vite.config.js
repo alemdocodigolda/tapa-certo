@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // Base path for GitHub Pages (repo name)
-  base: '/tapa-certo/',
+    // Base path for GitHub Pages (repo name)
+    base: '/tapa-certo/',
 });

@@ -1,88 +1,88 @@
 # Tapa Certo
 
-A small web‑game built with **Vite**, plain **HTML**, **JavaScript**, and **CSS**. The project demonstrates a simple interactive card‑matching game ("Tapa Certo") and is configured to be deployed for free on **GitHub Pages**.
+Um jogo interativo de cartas construído com **Vite**, **HTML**, **JavaScript** e **CSS**. O projeto demonstra um jogo simples de combinação de cartas e está configurado para ser implantado gratuitamente no **GitHub Pages**.
 
 ---
 
-## ✨ Features
-- Responsive UI with a modern design (dark‑mode ready).
-- Simple game logic written in vanilla JavaScript.
-- Easy local development with Vite's dev server.
-- One‑click deployment to GitHub Pages via `npm run deploy` or automatically through GitHub Actions.
+## ✨ Funcionalidades
+- Interface responsiva com design moderno (com suporte a dark mode)
+- Lógica de jogo simples escrita em JavaScript vanilla
+- Desenvolvimento local fácil com o servidor de desenvolvimento do Vite
+- Implantação com um clique no GitHub Pages via `npm run deploy` ou automaticamente através do GitHub Actions
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Começando
 
-### Prerequisites
-- **Node.js** (v20 or later recommended)
+### Pré-requisitos
+- **Node.js** (v20 ou superior recomendado)
 - **Git**
 
-### Installation
+### Instalação
 ```bash
-# Clone the repository
+# Clone o repositório
 git clone https://github.com/alemdocodigolda/tapa-certo.git
 cd tapa-certo
 
-# Install dependencies
-npm ci
+# Instale as dependências
+npm install
 ```
 
-### Development
+### Desenvolvimento
 ```bash
-npm run dev   # Starts Vite dev server (http://localhost:5173)
+npm run dev   # Inicia o servidor de desenvolvimento Vite
 ```
-Open the displayed URL in your browser and start playing!
+Abra a URL exibida no seu navegador e comece a jogar!
 
-### Build for Production
+### Build para Produção
 ```bash
-npm run build   # Generates the static site in the ./dist folder
+npm run build   # Gera o site estático na pasta ./dist
 ```
 
 ---
 
-## 📦 Deploy to GitHub Pages
-There are two ways to publish the site:
+## 📦 Deploy no GitHub Pages
+Existem duas formas de publicar o site:
 
-1. **Manual one‑time deploy**
+1. **Deploy manual único**
    ```bash
-   npm run deploy   # Builds and pushes ./dist to the gh-pages branch
+   npm run deploy   # Faz build e envia ./dist para a branch gh-pages
    ```
-   After the command finishes, the site will be available at:
+   Após o comando terminar, o site estará disponível em:
    `https://alemdocodigolda.github.io/tapa-certo/`
 
-2. **Automatic CI/CD**
-   The repository contains a GitHub Actions workflow (`.github/workflows/gh-pages.yml`). Every push to the `main` branch triggers the workflow, which builds the project and publishes the `dist` folder to the `gh-pages` branch automatically.
+2. **CI/CD Automático**
+   O repositório contém um workflow do GitHub Actions (`.github/workflows/gh-pages.yml`). Cada push para a branch `main` aciona o workflow, que faz o build do projeto e publica a pasta `dist` na branch `gh-pages` automaticamente.
 
 ---
 
-## 📂 Project Structure
+## 📂 Estrutura do Projeto
 ```
-├─ index.html          # Entry point
-├─ main.js             # Game logic
-├─ style.css           # Styles (including the custom design system)
-├─ vite.config.js      # Vite configuration with base path for GitHub Pages
-├─ package.json        # Scripts & dependencies (vite, gh-pages)
-└─ .github/workflows/gh-pages.yml   # CI/CD workflow
+├─ index.html          # Ponto de entrada
+├─ main.js             # Lógica do jogo
+├─ style.css           # Estilos (incluindo o sistema de design customizado)
+├─ vite.config.js      # Configuração do Vite com base path para GitHub Pages
+├─ package.json        # Scripts e dependências (vite, gh-pages)
+└─ .github/workflows/gh-pages.yml   # Workflow de CI/CD
 ```
 
 ---
 
-## 🛠️ Customisation
-- **Design** – Edit `style.css` to adjust colours, fonts, or animations.
-- **Game logic** – Modify `main.js` to change rules, timing, or add new features.
-- **Base URL** – If you rename the repository, update the `homepage` field in `package.json` and the `base` option in `vite.config.js`.
+## 🛠️ Personalização
+- **Design** – Edite `style.css` para ajustar cores, fontes ou animações
+- **Lógica do jogo** – Modifique `main.js` para alterar regras, tempo ou adicionar novos recursos
+- **URL base** – Se renomear o repositório, atualize o campo `homepage` em `package.json` e a opção `base` em `vite.config.js`
 
 ---
 
-## 📄 License
-This project is licensed under the **MIT License** – feel free to fork, modify, and share!
+## 📄 Licença
+Este projeto está licenciado sob a **Licença MIT** – sinta-se livre para fazer fork, modificar e compartilhar!
 
 ---
 
-## 🙋‍♂️ Author
-**Hugo Castro** – [GitHub profile](https://github.com/alemdocodigolda)
+## 🙋‍♂️ Autor
+**Hugo Castro** – [Perfil GitHub](https://github.com/alemdocodigolda)
 
 ---
 
-*Enjoy the game and happy hacking!*
+*Divirta-se jogando e bom desenvolvimento!*
