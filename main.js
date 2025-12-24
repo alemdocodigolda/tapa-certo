@@ -1,6 +1,7 @@
 const animals = [
     { name: 'Leão', emoji: '🦁', color: '#FFB347' }, { name: 'Girafa', emoji: '🦒', color: '#FDFD96' }, { name: 'Tigre', emoji: '🐯', color: '#FF8647' },
     { name: 'Elefante', emoji: '🐘', color: '#B2B2B2' }, { name: 'Zebra', emoji: '🦓', color: '#E0E0E0' }, { name: 'Macaco', emoji: '🐒', color: '#A67B5B' },
+    { name: 'Onça', emoji: '🐆', color: '#FFB90F' },
     { name: 'Jacaré', emoji: '🐊', color: '#77DD77' }, { name: 'Hipopótamo', emoji: '🦛', color: '#AEC6CF' }, { name: 'Rinoceronte', emoji: '🦏', color: '#CFCFC4' },
     { name: 'Canguru', emoji: '🦘', color: '#DEA5A4' }, { name: 'Urso', emoji: '🐻', color: '#836953' }, { name: 'Lobo', emoji: '🐺', color: '#BDBDBD' },
     { name: 'Raposa', emoji: '🦊', color: '#FF914D' }, { name: 'Coelho', emoji: '🐰', color: '#F2F2F2' }, { name: 'Esquilo', emoji: '🐿️', color: '#D2B48C' },
@@ -17,11 +18,16 @@ const animals = [
     { name: 'Cavalo-marinho', emoji: '🦄', color: '#D8BFD8' },
     { name: 'Caranguejo', emoji: '🦀', color: '#FF4500' }, { name: 'Lagosta', emoji: '🦞', color: '#DC143C' }, { name: 'Água-viva', emoji: '🪼', color: '#E6E6FA' },
     { name: 'Tartaruga-marinha', emoji: '🐢', color: '#556B2F' }, { name: 'Gato', emoji: '🐱', color: '#F5DEB3' }, { name: 'Cachorro', emoji: '🐶', color: '#8B4513' },
-    { name: 'Cavalo', emoji: '🐴', color: '#C0C0C0' }, { name: 'Vaca', emoji: '🐮', color: '#FFFFFF' }
+    { name: 'Cavalo', emoji: '🐴', color: '#C0C0C0' }, { name: 'Vaca', emoji: '🐮', color: '#FFFFFF' },
+    { name: 'Ovelha', emoji: '🐑', color: '#F0F0F0' }, { name: 'Porco', emoji: '🐷', color: '#FFC0CB' }, { name: 'Galinha', emoji: '🐔', color: '#FFFFFF' },
+    { name: 'Pinto', emoji: '🐥', color: '#FFFF00' }, { name: 'Rato', emoji: '🐁', color: '#D3D3D3' }, { name: 'Peixe', emoji: '🐟', color: '#87CEEB' },
+    { name: 'Abelha', emoji: '🐝', color: '#FFD700' }, { name: 'Borboleta', emoji: '🦋', color: '#87CEFA' }, { name: 'Aranha', emoji: '🕷️', color: '#333333' },
+    { name: 'Joaninha', emoji: '🐞', color: '#FF0000' }, { name: 'Formiga', emoji: '🐜', color: '#555555' }, { name: 'Caracol', emoji: '🐌', color: '#DEB887' }
 ];
 
 // State management
 let deck = [];
+let activeAnimals = []; // Store selected animals for refill
 let history = [];
 let currentTimer = 30; // Time between cards (closed)
 let visibilityTimer = 10; // Time card stays open
@@ -46,6 +52,11 @@ const animalCard = document.getElementById('animal-card');
 const animalImageDisplay = document.getElementById('animal-image');
 const animalNameDisplay = document.getElementById('animal-name');
 const historyList = document.getElementById('history-list');
+
+// Selection Elements
+const animalSelectionGrid = document.getElementById('animal-selection-grid');
+const selectAllBtn = document.getElementById('select-all-btn');
+const deselectAllBtn = document.getElementById('deselect-all-btn');
 // Sound effects
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -77,9 +88,17 @@ function shuffle(array) {
 
 // Game Logic
 function initGame() {
+    const selectedAnimals = getSelectedAnimals();
+
+    if (selectedAnimals.length < 2) {
+        alert("Selecione pelo menos 2 animais para jogar!");
+        return;
+    }
+
     currentTimer = parseInt(timerInput.value);
     visibilityTimer = parseInt(visibilityInput.value);
-    deck = shuffle([...animals]);
+    activeAnimals = [...selectedAnimals]; // Store for refill
+    deck = shuffle([...activeAnimals]);
     history = [];
     updateHistoryUI();
 
@@ -101,7 +120,7 @@ function startNextPhase(showCard) {
         // Phase 1: Card is visible
         if (deck.length === 0) {
             alert("O baralho acabou! Reiniciando...");
-            deck = shuffle([...animals]);
+            deck = shuffle([...activeAnimals]); // Refill from active selection
         }
 
         const next = deck.pop();
@@ -186,6 +205,41 @@ function togglePause() {
     }
 }
 
+// Animal Selection Logic
+function renderAnimalSelection() {
+    animalSelectionGrid.innerHTML = '';
+
+    // Check saved state or default to all
+    const savedSelection = JSON.parse(localStorage.getItem('tapaCertoSelection') || '[]');
+    const useSaved = savedSelection.length > 0;
+
+    animals.forEach((animal, index) => {
+        const label = document.createElement('label');
+        label.className = 'animal-option';
+
+        const isChecked = useSaved ? savedSelection.includes(animal.name) : true;
+
+        label.innerHTML = `
+            <input type="checkbox" name="animal-select" value="${animal.name}" ${isChecked ? 'checked' : ''}>
+            <div class="option-card">
+                <span class="option-emoji">${animal.emoji}</span>
+                <span class="option-name">${animal.name}</span>
+            </div>
+        `;
+        animalSelectionGrid.appendChild(label);
+    });
+}
+
+function getSelectedAnimals() {
+    const checkboxes = document.querySelectorAll('input[name="animal-select"]:checked');
+    const selectedNames = Array.from(checkboxes).map(cb => cb.value);
+
+    // Save to local storage
+    localStorage.setItem('tapaCertoSelection', JSON.stringify(selectedNames));
+
+    return animals.filter(a => selectedNames.includes(a.name));
+}
+
 function updateHistoryUI() {
     historyList.innerHTML = '';
     history.slice().reverse().forEach(item => {
@@ -211,6 +265,8 @@ function updateHistoryUI() {
 
 // Event Listeners
 window.addEventListener('load', () => {
+    renderAnimalSelection();
+
     const savedTimer = localStorage.getItem('tapaCertoTimer');
     if (savedTimer) {
         timerInput.value = savedTimer;
@@ -260,3 +316,11 @@ function playCardFlip() {
     // Web Audio API or small mp3 could go here
     // Keeping it "low resources" so no external assets for now
 }
+
+selectAllBtn.addEventListener('click', () => {
+    document.querySelectorAll('input[name="animal-select"]').forEach(cb => cb.checked = true);
+});
+
+deselectAllBtn.addEventListener('click', () => {
+    document.querySelectorAll('input[name="animal-select"]').forEach(cb => cb.checked = false);
+});
